@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "semicolon": true,
+    "requireReturnType": true,
+    "requireParameterType": true,
+    "quotemark": "single"
+  }
+}
