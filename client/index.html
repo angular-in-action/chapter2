@@ -16,7 +16,7 @@
 
 <body style="background: #f3f3f3">
 
-  <h1>Stock Tracker</h1>
+  <app></app>
 
   <!-- ES6 -->
   <script src="/lib/system.js"></script>
@@ -41,6 +41,9 @@
       }
     });
 
+    System.import('/client/bootstrap').catch(
+      console.error.bind(console)
+    );
   </script>
 </body>
 
