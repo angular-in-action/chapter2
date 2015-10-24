@@ -1,5 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts" />
-
 import {Component, View, NgIf, NgClass} from 'angular2/angular2';
 
 import {StockInterface} from '../services/stocks';

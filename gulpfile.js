@@ -7,9 +7,7 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
-var tsd = require('tsd');
 var ts = require('gulp-typescript');
-var tslint = require('gulp-tslint');
 var minimist = require('minimist');
 
 var packageJson = require('./package.json');
@@ -18,16 +16,11 @@ var spawn = childProcess.spawn;
 var server;
 
 var PATHS = {
-  lib: [
-    'node_modules/angular2/node_modules/rx/dist/rx.js',
-    'node_modules/reflect-metadata/Reflect.js',
-    'node_modules/zone.js/dist/zone.js',
-    'node_modules/zone.js/dist/long-stack-trace-zone.js',
-    '!node_modules/systemjs/dist/*.src.js',
-    'node_modules/systemjs/dist/*.js'
-  ],
-  typings: [
-    'typings/tsd.d.ts'
+  libs: [
+    'node_modules/angular2/bundles/angular2.dev.js',
+    'node_modules/angular2/bundles/http.dev.js',
+    'node_modules/angular2/bundles/router.dev.js',
+    'node_modules/systemjs/dist/system.src.js'
   ],
   client: {
     ts: ['client/**/*.ts'],
@@ -41,48 +34,15 @@ var PATHS = {
   port: 8080
 };
 
-var tsProject = ts.createProject('tsconfig.json', {
-  typescript: require('typescript')
-});
+var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('clean', function(done) {
   del([PATHS.dist], done);
 });
 
-gulp.task('tsd', function() {
-  var tsdAPI = tsd.getAPI('tsd.json');
-  return tsdAPI.readConfig({}, true).then(function() {
-    return tsdAPI.reinstall(
-      tsd.Options.fromJSON({}) // https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
-    ).then(function() {
-      return tsdAPI.updateBundle(tsdAPI.context.config.bundle, true);
-    });
-  });
-});
-
-gulp.task('angular2', function() {
-  return gulp
-		.src([
-			'!node_modules/angular2/es6/**',
-			'!node_modules/angular2/node_modules/**',
-			'!node_modules/angular2/angular2.api.js',
-			'!node_modules/angular2/angular2_sfx.js',
-      '!node_modules/angular2/angular2.api.js',
-			'!node_modules/angular2/ts/**',
-			'node_modules/angular2/**/*.js'
-		])
-		.pipe(gulp.dest(PATHS.dist + '/lib/angular2'));
-});
-
-gulp.task('libs', ['tsd', 'angular2'], function() {
-  return gulp
-    .src(PATHS.lib)
-    .pipe(gulp.dest(PATHS.distLib));
-});
-
 gulp.task('ts', function() {
   return gulp
-    .src([].concat(PATHS.typings, PATHS.client.ts)) // instead of gulp.src(...), project.src() can be used
+    .src(PATHS.client.ts)
     .pipe(changed(PATHS.distClient, {
       extension: '.js'
     }))
@@ -90,15 +50,6 @@ gulp.task('ts', function() {
     .pipe(ts(tsProject))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(PATHS.distClient));
-});
-
-gulp.task('lint', function () { // https://github.com/palantir/tslint#supported-rules
-	return gulp
-		.src(PATHS.client.ts)
-		.pipe(tslint())
-		.pipe(tslint.report('prose', {
-			emitError: false
-		}));
 });
 
 gulp.task('html', function() {
@@ -128,7 +79,7 @@ gulp.task('img', function() {
 });
 
 gulp.task('bundle', function(done) {
-  runSequence('clean', ['libs', 'lint', 'ts', 'html', 'css', 'img'], done);
+  runSequence('clean', ['libs', 'ts', 'html', 'css', 'img'], done);
 });
 
 gulp.task('server:restart', function(done) {
@@ -156,6 +107,13 @@ process.on('exit', function() {
     server.kill();
   }
 });
+
+gulp.task('libs', function() {
+  return gulp
+    .src(PATHS.libs)
+    .pipe(changed(PATHS.distLib))
+    .pipe(gulp.dest(PATHS.distLib));
+})
 
 gulp.task('go', ['bundle', 'server:restart'], function() {
   gulp.watch(PATHS.client.ts, ['ts']);

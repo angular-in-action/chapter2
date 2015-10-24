@@ -1,28 +1,12 @@
 {
-    "version": "1.5.0",
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "declaration": false,
-        "noImplicitAny": false,
-        "removeComments": true,
-        "noLib": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "sourceMap": true,
-        "outDir": "dist"
-    },
-    "filesGlob": [
-        "typings/tsd.d.ts",
-        "client/**/*.ts"
-    ],
-    "files": [
-        "typings/tsd.d.ts",
-        "client/bootstrap.ts",
-        "client/components/app.ts",
-        "client/components/dashboard.ts",
-        "client/components/manage.ts",
-        "client/components/summary.ts",
-        "client/services/stocks.ts"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "outDir": "dist"
+  }
 }

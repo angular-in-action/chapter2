@@ -9,8 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Angular2">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.indigo-orange.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="http://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-orange.min.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="client/app.css">
 </head>
 
@@ -18,32 +18,18 @@
 
   <app></app>
 
-  <!-- ES6 -->
-  <script src="/lib/system.js"></script>
-  <!-- Angular Deps -->
-  <script src="/lib/reflect.js"></script>
-  <script src="/lib/zone.js"></script>
-  <script src="/lib/long-stack-trace-zone.js"></script>
+  <!-- SystemJS -->
+  <script src="/lib/system.src.js"></script>
+  <script src="/lib/angular2.dev.js"></script>
+  <script src="/lib/http.dev.js"></script>
+  <script src="/lib/router.dev.js"></script>
+
   <!-- App -->
   <script>
-    System.defaultJSExtensions = true;
-    System.config({
-      paths: {
-        'angular2/*': '/lib/angular2/*'
-      },
-      meta: {
-        '/lib/rx.js': {
-          format: 'cjs'
-        }
-      },
-      map: {
-        rx: '/lib/rx.js'
-      }
-    });
-
-    System.import('/client/bootstrap').catch(
-      console.error.bind(console)
-    );
+  System.config({
+    packages: {'client': {defaultExtension: 'js'}}
+  });
+  System.import('client/bootstrap');
   </script>
 </body>
 

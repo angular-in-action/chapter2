@@ -1,13 +1,11 @@
-/// <reference path="../../typings/tsd.d.ts" />
-
 import {Component, View, NgFor} from 'angular2/angular2';
-import {FORM_BINDINGS, FORM_DIRECTIVES, FormBuilder} from 'angular2/angular2';
+import {FORM_DIRECTIVES, FormBuilder} from 'angular2/angular2';
 
 import {StocksService} from '../services/stocks';
 
 @Component({
   selector: 'manage',
-  viewBindings: [FORM_BINDINGS, StocksService]
+  viewBindings: [StocksService]
 })
 @View({
   directives: [NgFor, FORM_DIRECTIVES],

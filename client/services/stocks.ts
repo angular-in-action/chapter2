@@ -1,4 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts"/>
 import { Inject } from 'angular2/angular2';
 import { Http } from 'angular2/http';
 
@@ -34,7 +33,7 @@ export class StocksService {
   load(symbols) {
     if (symbols) {
       return this.http.get('/api/snapshot?symbols=' + symbols.join())
-        .toRx()
+        // .toRx()
         .map(res => res.json());
     }
   }
