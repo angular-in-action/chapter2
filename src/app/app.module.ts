@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { StocksService } from './services/stocks.service';
 import { SummaryComponent } from './summary/summary.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ManageComponent } from './manage/manage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SummaryComponent,
-    DashboardComponent
+    DashboardComponent,
+    ManageComponent
   ],
   imports: [
     BrowserModule,
