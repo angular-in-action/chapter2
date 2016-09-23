@@ -9,6 +9,8 @@ import { SummaryComponent } from './summary/summary.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManageComponent } from './manage/manage.component';
 
+import { appRoutes } from './app.routes';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,8 @@ import { ManageComponent } from './manage/manage.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    appRoutes
   ],
   providers: [StocksService],
   bootstrap: [AppComponent]
